@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Canvas_backend.props" />
+</Project>

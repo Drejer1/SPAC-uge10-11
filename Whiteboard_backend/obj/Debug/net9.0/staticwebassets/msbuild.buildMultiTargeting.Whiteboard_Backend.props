@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Whiteboard_Backend.props" />
+</Project>
