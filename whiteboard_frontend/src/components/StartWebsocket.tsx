@@ -2,7 +2,15 @@ import {useEffect,useState} from "react";
 import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
 import {Buffer} from "buffer";
 
-function StartWebsocket(url:string) {
+function StartWebsocket(url:string,canvasRef:HTMLCanvasElement) {
+    const [connection,setConnection] = useState<HubConnection|null>(null);
+    const [isConnected,setIsConnected] = useState<boolean>(false);
+    const [error,setError] = useState<string>("");
+
+
+
+
+
     useEffect(() => {
         const connect = async () => {
             const newConnection = new HubConnectionBuilder()
@@ -11,9 +19,26 @@ function StartWebsocket(url:string) {
                 drawOnCanvas(from, to,thickness,color)
             });
             newConnection.on("ReceiveImage", (bytes: string) =>{
-
+                drawImage(bytes)
             })
-        }
+            try {
+                await newConnection.start().then(() =>
+                newConnection.invoke("GetImage").catch(err => console.error(err)));
+                setConnection(newConnection);
+                setIsConnected(true);
+                console.log("Connected to SignalR Hub!");
+            } catch (err) {
+                console.error("Error connecting to SignalR Hub: ", err);
+            }
+        };
+        connect();
+        return ()=>{
+            if (connection){
+                connection.stop();
+                console.log("Disconnected from SignalR Hub!");
+            }
+        };
+
     }, [url]);
 
     const drawImage = (bytes: string) => {
@@ -34,10 +59,18 @@ function StartWebsocket(url:string) {
             }
 
         }
+        img.src = url;
     }
 
 
 
 
+
+
+    return  {
+        invokeMethod,
+        isConnected,
+        error,
+    }
 }
 export default StartWebsocket;
