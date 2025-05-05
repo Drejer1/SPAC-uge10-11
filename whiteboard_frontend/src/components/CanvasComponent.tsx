@@ -1,6 +1,7 @@
 import React, {useEffect,useState,useRef}  from "react";
 import {HubConnection,HubConnectionBuilder} from "@microsoft/signalr";
 import {Buffer} from "buffer";
+import SimpleButton from "./Buttons/SimpleButton.tsx";
 const CanvasComponent = () =>{
     // Refs and state hooks
     const canvasRef = useRef<HTMLCanvasElement|null> (null);
@@ -109,18 +110,6 @@ const CanvasComponent = () =>{
         }
     };
 
-    interface ClearCanvasButtonProps {
-        label: string;
-        onClick: () => void;
-    }
-
-    const ClearCanvasButton = ({label, onClick}: ClearCanvasButtonProps) => {
-        return (
-            <button className="clear-button" onClick={onClick}>
-            {label}
-            </button>)
-    }
-
 
 
     return (
@@ -128,7 +117,7 @@ const CanvasComponent = () =>{
             <h1>Canvas Drawing</h1>
             {isConnected ? (
                 <div>
-                    <ClearCanvasButton label="Clear Canvas" onClick={handleClick}/>
+                    <SimpleButton label="Clear Canvas" onClick={handleClick}/>
                     <canvas
                         ref={canvasRef}
                         width={800}
