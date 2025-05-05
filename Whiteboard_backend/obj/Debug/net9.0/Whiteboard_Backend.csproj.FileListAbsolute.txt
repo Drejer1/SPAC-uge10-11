@@ -98,3 +98,4 @@ C:\Users\A-SPAC10\Documents\GitHub\SPAC-uge10-11\Whiteboard_backend\obj\Debug\ne
 C:\Users\A-SPAC10\Documents\GitHub\SPAC-uge10-11\Whiteboard_backend\obj\Debug\net9.0\Whiteboard_Backend.pdb
 C:\Users\A-SPAC10\Documents\GitHub\SPAC-uge10-11\Whiteboard_backend\obj\Debug\net9.0\Whiteboard_Backend.genruntimeconfig.cache
 C:\Users\A-SPAC10\Documents\GitHub\SPAC-uge10-11\Whiteboard_backend\obj\Debug\net9.0\ref\Whiteboard_Backend.dll
+C:\Users\A-SPAC10\Documents\GitHub\SPAC-uge10-11\Whiteboard_backend\obj\Debug\net9.0\Whiteboard_Backend.sourcelink.json

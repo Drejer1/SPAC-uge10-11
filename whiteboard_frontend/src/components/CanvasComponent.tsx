@@ -10,7 +10,8 @@ const CanvasComponent = () =>{
     const [lastPos,setLastPos] = useState<{x:number,y:number}>({x:0,y:0});
 
     //Set up SignalR connection
-    useEffect(()=>{
+    useEffect(()=>
+    {
         const connect = async ()=> {
             const newConnection = new HubConnectionBuilder()
                 .withUrl("http://localhost:5203/canvasHub")
@@ -61,7 +62,10 @@ const CanvasComponent = () =>{
             }
         };
     },[])
-
+    const handleClick = () => {
+        console.log('ClearCanvas');
+        if (connection) connection.invoke("ClearCanvas")
+    };
     const startDrawing = (e: React.MouseEvent)=>{
         if (canvasRef.current){
             setDrawing(true);
@@ -104,11 +108,27 @@ const CanvasComponent = () =>{
             }
         }
     };
+
+    interface ClearCanvasButtonProps {
+        label: string;
+        onClick: () => void;
+    }
+
+    const ClearCanvasButton = ({label, onClick}: ClearCanvasButtonProps) => {
+        return (
+            <button className="clear-button" onClick={onClick}>
+            {label}
+            </button>)
+    }
+
+
+
     return (
         <div>
             <h1>Canvas Drawing</h1>
             {isConnected ? (
                 <div>
+                    <ClearCanvasButton label="Clear Canvas" onClick={handleClick}/>
                     <canvas
                         ref={canvasRef}
                         width={800}

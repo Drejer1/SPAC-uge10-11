@@ -40,9 +40,10 @@ namespace Canvas_backend
         }
         public async Task ClearCanvas()
         {
+            Console.WriteLine("Clear Canvas");
             _canvasService.ClearCanvas();
             var imageBytes = _canvasService.GetImageBytes();
-            await Clients.Caller.SendAsync("ClearCanvas", imageBytes);
+            await Clients.All.SendAsync("ReceiveImage", imageBytes);
         }
 
     }
