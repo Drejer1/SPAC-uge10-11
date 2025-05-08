@@ -1,76 +1,61 @@
-import {useEffect,useState} from "react";
-import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
-import {Buffer} from "buffer";
+import { useEffect, useState } from "react";
+import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+import {useCanvas} from "../contexts/CanvasContext.tsx"; // Import your context
 
-function StartWebsocket(url:string,canvasRef:HTMLCanvasElement) {
-    const [connection,setConnection] = useState<HubConnection|null>(null);
-    const [isConnected,setIsConnected] = useState<boolean>(false);
-    const [error,setError] = useState<string>("");
-
-
-
-
+export const useWebSocket = (url: string) => {
+    const { drawLine, drawImage} = useCanvas();
+    const [connection, setConnection] = useState<HubConnection | null>(null);
+    const [isConnected, setIsConnected] = useState(false); // Track connection status
 
     useEffect(() => {
-        const connect = async () => {
-            const newConnection = new HubConnectionBuilder()
-                .withUrl(url).build();
-            newConnection.on("drawOnCanvas", (from: { x: number, y: number }, to: { x: number, y: number },thickness:number,color:string) => {
-                drawOnCanvas(from, to,thickness,color)
-            });
-            newConnection.on("ReceiveImage", (bytes: string) =>{
-                drawImage(bytes)
-            })
+        const newConnection = new HubConnectionBuilder()
+            .withUrl(url)
+            .withAutomaticReconnect()
+            .build();
+
+        setConnection(newConnection);
+
+        const startConnection = async () => {
             try {
-                await newConnection.start().then(() =>
-                newConnection.invoke("GetImage").catch(err => console.error(err)));
-                setConnection(newConnection);
+                await newConnection.start();
+
+                await newConnection.invoke("GetImage").catch((err) => console.error("GetImage Error: ", err));
+
                 setIsConnected(true);
                 console.log("Connected to SignalR Hub!");
+
             } catch (err) {
                 console.error("Error connecting to SignalR Hub: ", err);
             }
         };
-        connect();
-        return ()=>{
-            if (connection){
-                connection.stop();
-                console.log("Disconnected from SignalR Hub!");
+
+        startConnection();
+
+        return () => {
+            if (newConnection) {
+                newConnection.stop().catch((err) => console.error("Error stopping connection: ", err));
             }
         };
-
     }, [url]);
 
-    const drawImage = (bytes: string) => {
-        const byteArray = Uint8Array.from(Buffer.from(bytes,'base64'));
-        const blob = new Blob([byteArray], { type: "image/png" });
-        const url = URL.createObjectURL(blob);
-        const img = new Image();
-        img.onload = () => {
-            const canvas = canvasRef.current;
-            if (canvas) {
-                const ctx = canvas.getContext("2d");
-                if (ctx) {
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.drawImage(img, 0, 0);
-                }
-            }
+    useEffect(() => {
+        if (connection) {
+            connection.on("drawOnCanvas", (from: { x: number; y: number }, to: { x: number; y: number }, thickness: number, color: string) => {
+                drawLine(from, to, thickness, color);
+            });
 
+            connection.on("ReceiveImage", (bytes: string) => {
+                drawImage(bytes);
+            });
         }
-        img.src = url;
-    }
 
+        return () => {
+            if (connection) {
+                connection.off("drawOnCanvas");
+                connection.off("ReceiveImage");
+            }
+        };
+    }, [connection]);
 
-
-
-
-
-    return  {
-        invokeMethod,
-        isConnected,
-        error,
-    }
-}
-export default StartWebsocket;
+    return { connection, isConnected };
+};
