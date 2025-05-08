@@ -9,7 +9,8 @@ builder.Services.AddCors();
 var app = builder.Build();
 app.UseCors(options =>
 {
-    options.AllowAnyHeader()
+    options.WithOrigins("http://localhost:5173")
+    .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials()
     .SetIsOriginAllowed(origin => true);
@@ -21,6 +22,6 @@ app.MapHub<CanvasHub>("/canvasHub");
 app.MapGet("/test", async (IHubContext<CanvasHub> hub, string message) =>
   await hub.Clients.All.SendAsync("NotifyMe", $"Message: {message}"));
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "Running");
 
 app.Run();

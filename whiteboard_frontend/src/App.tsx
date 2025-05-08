@@ -1,20 +1,29 @@
-import React from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
-import CanvasComponent from './components/CanvasComponent'
+import CanvasComponent from "./components/CanvasComponent.tsx";
 import './App.css'
 import {CanvasProvider} from "./contexts/CanvasContext.tsx";
+import CanvasListPage from "./pages/CanvasListPage.tsx";
+import Navbar from "./pages/Navbar.tsx";
 //import { HubConnectionBuilder } from '@microsoft/signalr';
 
-const App: React.FC = () => {
+const App = () => {
     return (
-        <div>
-            <h1>Canvas Drawing Application</h1>
-            {/* Render the CanvasComponent */}
+        <Router>
             <CanvasProvider>
-                <CanvasComponent />
+            <div>
+                <h1>Collaborative Whiteboard app</h1>
+                <Navbar />
+
+                <Routes>
+                    <Route path="/" element={<CanvasListPage />} />
+                    <Route path="/canvas/:canvasId" element={<CanvasComponent />} />
+                </Routes>
+
+            </div>
             </CanvasProvider>
-        </div>
+        </Router>
     );
 };
 

@@ -3,12 +3,14 @@ import React, {useState}  from "react";
 import SimpleButton from "./Buttons/SimpleButton.tsx";
 import {useCanvas} from "../contexts/CanvasContext.tsx";
 import {useWebSocket} from "./StartWebsocket.tsx";
+import {useParams} from "react-router-dom";
 const CanvasComponent = () =>{
     // Refs and state hooks
+    const {canvasId} = useParams();
     const [drawing,setDrawing] = useState<boolean>(false);
     const {canvasRef,lastPos,startStroke,drawLine} = useCanvas();
+    //const { connection, isConnected } = useWebSocket("http://localhost:5203/canvasHub?canvasId=" + canvasId + "");
     const { connection, isConnected } = useWebSocket("http://localhost:5203/canvasHub");
-
 
     const handleClick = () => {
         console.log('ClearCanvas');
@@ -34,20 +36,16 @@ const CanvasComponent = () =>{
         connection.invoke("DrawLine", lastPos.x, lastPos.y, offsetX, offsetY,2,"000000");
     }
 
-
-
-
-
     return (
         <div>
-            <h1>Canvas Drawing</h1>
+            <h3>Canvas Drawing - Canvas ID: {canvasId}</h3> {/* Display the canvasId */}
             {isConnected ? (
                 <div>
                     <SimpleButton label="Clear Canvas" onClick={handleClick}/>
                     <canvas
                         ref={canvasRef}
-                        width={800}
-                        height={600}
+                        width={1000}
+                        height={800}
                         onMouseDown={handleMouseDown}
                         onMouseUp={handleMouseUp}
                         onMouseMove={handleMouseMove}

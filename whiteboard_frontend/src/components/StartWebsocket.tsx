@@ -13,14 +13,15 @@ export const useWebSocket = (url: string) => {
             .withAutomaticReconnect()
             .build();
 
-        setConnection(newConnection);
 
         const startConnection = async () => {
             try {
+                console.log("Before Start");
                 await newConnection.start();
-
-                await newConnection.invoke("GetImage").catch((err) => console.error("GetImage Error: ", err));
-
+                console.log("After Start");
+                //await newConnection.invoke("GetImage").catch((err) => console.error("GetImage Error: ", err));
+                console.log("After Image");
+                setConnection(newConnection);
                 setIsConnected(true);
                 console.log("Connected to SignalR Hub!");
 
