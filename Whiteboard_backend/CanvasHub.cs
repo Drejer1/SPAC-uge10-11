@@ -1,6 +1,9 @@
 ﻿using Canvas_backend.Model;
 using Microsoft.AspNetCore.SignalR;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Drawing.Processing;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 using System.Numerics;
 using System.Threading.Tasks;
 
@@ -9,7 +12,7 @@ namespace Canvas_backend
     public class CanvasHub : Hub
     {
         private readonly CanvasService _canvasService;
-
+        private readonly Image<Rgba32> canvas;
         public async Task CreateCanvas(string objectID, int width, int height)
         {
             _canvasService.CreateCanvas(objectID, width, height);
@@ -34,10 +37,13 @@ namespace Canvas_backend
         }
         public CanvasHub(CanvasService canvasService)
         {
+            canvas = new Image<Rgba32>(1000,800);
+            canvas.Mutate(x => x.Fill(Color.White));
             _canvasService = canvasService;
         }
         public async Task DrawLine(float fromX, float fromY, float toX,float toY, float thickness, string color)
-        {                      
+        {     
+            
             Vector2 from = new Vector2(fromX, fromY);
             Vector2 to = new Vector2(toX, toY);
             string objectID = "Canvas 1";
@@ -53,7 +59,11 @@ namespace Canvas_backend
         {
             string objectID= "Canvas 1";
             Console.WriteLine("GetImage:Hub");
-            var imageBytes = _canvasService.GetImageBytes(objectID);
+
+            using var ms = new MemoryStream();
+            canvas.SaveAsPng(ms);
+            var imageBytes = ms.ToArray();
+            //var imageBytes = _canvasService.GetImageBytes(objectID);
             await Clients.Caller.SendAsync("ReceiveImage", imageBytes);
         }
         public async Task SendMessage()

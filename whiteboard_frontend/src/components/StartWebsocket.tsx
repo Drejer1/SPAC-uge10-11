@@ -2,10 +2,18 @@ import { useEffect, useState } from "react";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import {useCanvas} from "../contexts/CanvasContext.tsx"; // Import your context
 
+
+async function delay(milliseconds: number) {
+    return new Promise<void>((resolve) => {
+        setTimeout(resolve, milliseconds);
+    });}
+
 export const useWebSocket = (url: string) => {
     const { drawLine, drawImage} = useCanvas();
     const [connection, setConnection] = useState<HubConnection | null>(null);
     const [isConnected, setIsConnected] = useState(false); // Track connection status
+
+
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
@@ -17,9 +25,10 @@ export const useWebSocket = (url: string) => {
         const startConnection = async () => {
             try {
                 console.log("Before Start");
+                await delay(1000);
                 await newConnection.start();
                 console.log("After Start");
-                //await newConnection.invoke("GetImage").catch((err) => console.error("GetImage Error: ", err));
+                await newConnection.invoke("GetImage").catch((err) => console.error("GetImage Error: ", err));
                 console.log("After Image");
                 setConnection(newConnection);
                 setIsConnected(true);
@@ -59,4 +68,4 @@ export const useWebSocket = (url: string) => {
     }, [connection]);
 
     return { connection, isConnected };
-};
+};;
