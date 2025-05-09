@@ -8,7 +8,7 @@ async function delay(milliseconds: number) {
         setTimeout(resolve, milliseconds);
     });}
 
-export const useWebSocket = (url: string) => {
+export const useWebSocket = (url: string, canvasID: string | undefined) => {
     const { drawLine, drawImage} = useCanvas();
     const [connection, setConnection] = useState<HubConnection | null>(null);
     const [isConnected, setIsConnected] = useState(false); // Track connection status
@@ -24,14 +24,23 @@ export const useWebSocket = (url: string) => {
 
         const startConnection = async () => {
             try {
-                console.log("Before Start");
                 await delay(1000);
+                console.log("Before Start");
+
                 await newConnection.start();
+                newConnection.on("drawOnCanvas", (from: { x: number; y: number }, to: { x: number; y: number }, thickness: number, color: string) => {
+                    drawLine(from, to, thickness, color);
+                });
+                newConnection.on("ReceiveImage", (bytes: string) => {
+                    drawImage(bytes);
+                });
                 console.log("After Start");
-                await newConnection.invoke("GetImage").catch((err) => console.error("GetImage Error: ", err));
+
+                await newConnection.invoke("JoinCanvasGroup",canvasID).catch((err) => console.error("GetImage Error: ", err));
                 console.log("After Image");
                 setConnection(newConnection);
                 setIsConnected(true);
+
                 console.log("Connected to SignalR Hub!");
 
             } catch (err) {
@@ -42,30 +51,14 @@ export const useWebSocket = (url: string) => {
         startConnection();
 
         return () => {
-            if (newConnection) {
-                newConnection.stop().catch((err) => console.error("Error stopping connection: ", err));
+            if (connection) {
+                connection.invoke("LeaveCanvasGroup","Canvas 1").catch((err) => console.error("Error leaving group:", err));
+                connection.stop().catch((err) => console.error("Error stopping connection: ", err));
             }
         };
     }, [url]);
 
-    useEffect(() => {
-        if (connection) {
-            connection.on("drawOnCanvas", (from: { x: number; y: number }, to: { x: number; y: number }, thickness: number, color: string) => {
-                drawLine(from, to, thickness, color);
-            });
 
-            connection.on("ReceiveImage", (bytes: string) => {
-                drawImage(bytes);
-            });
-        }
-
-        return () => {
-            if (connection) {
-                connection.off("drawOnCanvas");
-                connection.off("ReceiveImage");
-            }
-        };
-    }, [connection]);
 
     return { connection, isConnected };
 };;

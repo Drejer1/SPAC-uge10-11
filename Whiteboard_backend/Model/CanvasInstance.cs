@@ -14,6 +14,7 @@ namespace Whiteboard_Backend.Model
         public CanvasInstance(int width, int height)
         {
             canvas = new Image<Rgba32>(width, height);
+            canvas.Mutate(ctx => ctx.Fill(Color.White));
         }
         public void DrawLine( Vector2 from, Vector2 to, float thickness, Color color)
         {

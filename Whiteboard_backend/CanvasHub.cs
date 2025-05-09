@@ -41,29 +41,25 @@ namespace Canvas_backend
             canvas.Mutate(x => x.Fill(Color.White));
             _canvasService = canvasService;
         }
-        public async Task DrawLine(float fromX, float fromY, float toX,float toY, float thickness, string color)
+        public async Task DrawLine(string objectID, float fromX, float fromY, float toX,float toY, float thickness, string color)
         {     
             
             Vector2 from = new Vector2(fromX, fromY);
             Vector2 to = new Vector2(toX, toY);
-            string objectID = "Canvas 1";
 
             _canvasService.DrawLine(objectID,from, to, thickness, Color.ParseHex(color));
 
-            await Clients.All.SendAsync("drawOnCanvas", 
+            await Clients.Group(objectID).SendAsync("drawOnCanvas", 
                 new { x = fromX, y = fromY }, 
                 new { x = toX, y = toY },
                 thickness, color);
         }
-        public async Task GetImage()
+        public async Task GetImage(string objectID)
         {
-            string objectID= "Canvas 1";
+            objectID= "Canvas 1";
             Console.WriteLine("GetImage:Hub");
 
-            using var ms = new MemoryStream();
-            canvas.SaveAsPng(ms);
-            var imageBytes = ms.ToArray();
-            //var imageBytes = _canvasService.GetImageBytes(objectID);
+            var imageBytes = _canvasService.GetImageBytes(objectID);
             await Clients.Caller.SendAsync("ReceiveImage", imageBytes);
         }
         public async Task SendMessage()
@@ -74,9 +70,10 @@ namespace Canvas_backend
         public async Task ClearCanvas(string objectID)
         {
             Console.WriteLine("Clear Canvas");
+
             _canvasService.ClearCanvas(objectID);
             var imageBytes = _canvasService.GetImageBytes(objectID);
-            await Clients.All.SendAsync("ReceiveImage", imageBytes);
+            await Clients.Group(objectID).SendAsync("ReceiveImage", imageBytes);
         }
         public async Task GetCanvasList()
         {

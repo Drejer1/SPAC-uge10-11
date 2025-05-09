@@ -6,15 +6,15 @@ import {useWebSocket} from "./StartWebsocket.tsx";
 import {useParams} from "react-router-dom";
 const CanvasComponent = () =>{
     // Refs and state hooks
-    const {canvasId} = useParams();
+    const {canvasId} = useParams<{ canvasId: string }>();
     const [drawing,setDrawing] = useState<boolean>(false);
     const {canvasRef,lastPos,startStroke,drawLine} = useCanvas();
     //const { connection, isConnected } = useWebSocket("http://localhost:5203/canvasHub?canvasId=" + canvasId + "");
-    const { connection, isConnected } = useWebSocket("http://localhost:5203/canvasHub");
+    const { connection, isConnected } = useWebSocket("http://localhost:5203/canvasHub",canvasId);
 
     const handleClick = () => {
         console.log('ClearCanvas');
-        if (connection) connection.invoke("ClearCanvas")
+        if (connection) connection.invoke("ClearCanvas",canvasId).catch((err) => console.error("ClearCanvas Error: ", err));
     };
 
     const handleMouseDown = (e: React.MouseEvent)=>{
@@ -32,8 +32,9 @@ const CanvasComponent = () =>{
         if (!drawing || !canvasRef.current) return;
         const {offsetX,offsetY} = e.nativeEvent;
         if(!connection) return;
+        console.log("Using CanvasID: " + canvasId + "")
         drawLine(lastPos, {x: offsetX, y: offsetY}, 2, "000000");
-        connection.invoke("DrawLine", lastPos.x, lastPos.y, offsetX, offsetY,2,"000000");
+        connection.invoke("DrawLine",canvasId, lastPos.x, lastPos.y, offsetX, offsetY,2,"000000");
     }
 
     return (

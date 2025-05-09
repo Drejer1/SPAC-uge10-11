@@ -2,9 +2,9 @@ import {Link} from "react-router-dom";
 import {useEffect} from "react";
 
 const mockCanvasList = [
-    {id : "1", name: "Temp1"},
-    {id : "2", name: "Temp2"},
-    {id : "3", name: "Temp3"}
+    {id : "Canvas 1", name: "Canvas 1"},
+    {id : "Canvas 2", name: "Canvas 2"},
+    {id : "Canvas 2", name: "Canvas 3"}
 ]
 
 const CanvasListPage = () => {
