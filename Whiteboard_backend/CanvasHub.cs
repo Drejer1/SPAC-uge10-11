@@ -12,7 +12,6 @@ namespace Canvas_backend
     public class CanvasHub : Hub
     {
         private readonly CanvasService _canvasService;
-        private readonly Image<Rgba32> canvas;
         public async Task CreateCanvas(string objectID, int width, int height)
         {
             _canvasService.CreateCanvas(objectID, width, height);
@@ -26,19 +25,18 @@ namespace Canvas_backend
         public async Task JoinCanvasGroup(string objectID)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, objectID);
+            Console.WriteLine("Id joined "+ objectID);
             var imageBytes = _canvasService.GetImageBytes(objectID);
-            Console.WriteLine(imageBytes);
             await Clients.Caller.SendAsync("ReceiveImage", imageBytes);
         }
 
         public async Task LeaveCanvasGroup(string objectID)
         {
+            Console.WriteLine("Id left "+ objectID);
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, objectID);
         }
         public CanvasHub(CanvasService canvasService)
         {
-            canvas = new Image<Rgba32>(1000,800);
-            canvas.Mutate(x => x.Fill(Color.White));
             _canvasService = canvasService;
         }
         public async Task DrawLine(string objectID, float fromX, float fromY, float toX,float toY, float thickness, string color)
@@ -57,7 +55,6 @@ namespace Canvas_backend
         public async Task GetImage(string objectID)
         {
             objectID= "Canvas 1";
-            Console.WriteLine("GetImage:Hub");
 
             var imageBytes = _canvasService.GetImageBytes(objectID);
             await Clients.Caller.SendAsync("ReceiveImage", imageBytes);

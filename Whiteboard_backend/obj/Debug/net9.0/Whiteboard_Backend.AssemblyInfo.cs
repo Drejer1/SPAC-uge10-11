@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Whiteboard_Backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+005bdafb25728ef55037ff2513ec88b1b427b7a4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a645e75080bab45f2bdebd2b3c86e073b8e6fc82")]
 [assembly: System.Reflection.AssemblyProductAttribute("Whiteboard_Backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Whiteboard_Backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -8,7 +8,9 @@ import CanvasListPage from "./pages/CanvasListPage.tsx";
 import Navbar from "./pages/Navbar.tsx";
 //import { HubConnectionBuilder } from '@microsoft/signalr';
 
+
 const App = () => {
+
     return (
         <Router>
             <CanvasProvider>
@@ -18,7 +20,7 @@ const App = () => {
 
                 <Routes>
                     <Route path="/" element={<CanvasListPage />} />
-                    <Route path="/canvas/:canvasId" element={<CanvasComponent />} />
+                    <Route path="/canvas/:canvasID" element={<CanvasComponent/>} />
                 </Routes>
 
             </div>

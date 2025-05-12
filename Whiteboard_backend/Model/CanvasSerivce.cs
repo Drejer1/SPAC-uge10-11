@@ -16,9 +16,9 @@ namespace Canvas_backend.Model
 
         public CanvasService()
         {
-            CreateCanvas("Canvas 1", 1000, 800);
-            CreateCanvas("Canvas 2", 1000, 800);
-            CreateCanvas("Canvas 3", 1000, 800);
+            CreateCanvas("Canvas1", 1000, 800);
+            CreateCanvas("Canvas2", 1000, 800);
+            CreateCanvas("Canvas3", 1000, 800);
             Console.WriteLine("Number of Canvases" + _canvases.Count());
         }
         public void CreateCanvas(string objectID,int width, int height)
@@ -36,7 +36,6 @@ namespace Canvas_backend.Model
         }
         public byte[] GetImageBytes(string objectID)
         {
-            Console.WriteLine("GetImageBytes: Service");
             return _canvases[objectID].ExportImageBytes();
         }
         public List<string> GetCanvasIDs()

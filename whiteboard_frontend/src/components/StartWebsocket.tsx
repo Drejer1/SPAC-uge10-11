@@ -1,64 +1,81 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
-import {useCanvas} from "../contexts/CanvasContext.tsx"; // Import your context
-
-
-async function delay(milliseconds: number) {
-    return new Promise<void>((resolve) => {
-        setTimeout(resolve, milliseconds);
-    });}
+import { useCanvas } from "../contexts/CanvasContext.tsx";
 
 export const useWebSocket = (url: string, canvasID: string | undefined) => {
-    const { drawLine, drawImage} = useCanvas();
     const [connection, setConnection] = useState<HubConnection | null>(null);
-    const [isConnected, setIsConnected] = useState(false); // Track connection status
-
-
+    const [isConnected, setIsConnected] = useState(false);
+    const connectionRef = useRef<HubConnection | null>(null);
+    const { drawLine, drawImage } = useCanvas();
 
     useEffect(() => {
-        const newConnection = new HubConnectionBuilder()
-            .withUrl(url)
-            .withAutomaticReconnect()
-            .build();
+        if (!canvasID) return;
 
+        let isCancelled = false;
 
         const startConnection = async () => {
+            // Prevent duplicate connections
+            if (connectionRef.current) {
+                console.log("Connection already exists, skipping.");
+                return;
+            }
+
+            const newConnection = new HubConnectionBuilder()
+                .withUrl(url)
+                .withAutomaticReconnect()
+                .build();
+
+            connectionRef.current = newConnection;
+
             try {
-                await delay(1000);
-                console.log("Before Start");
+                await new Promise(res => setTimeout(res, 1000)); // delay
 
                 await newConnection.start();
-                newConnection.on("drawOnCanvas", (from: { x: number; y: number }, to: { x: number; y: number }, thickness: number, color: string) => {
-                    drawLine(from, to, thickness, color);
-                });
-                newConnection.on("ReceiveImage", (bytes: string) => {
-                    drawImage(bytes);
-                });
-                console.log("After Start");
+                console.log("Connected to SignalR hub");
 
-                await newConnection.invoke("JoinCanvasGroup",canvasID).catch((err) => console.error("GetImage Error: ", err));
-                console.log("After Image");
+                if (isCancelled) return; // Stop if unmounted
+
                 setConnection(newConnection);
                 setIsConnected(true);
 
-                console.log("Connected to SignalR Hub!");
+                newConnection.on("drawOnCanvas", (from, to, thickness, color) => {
+                    drawLine(from, to, thickness, color);
+                });
 
+                newConnection.on("ReceiveImage", (bytes) => {
+                    drawImage(bytes);
+                });
+
+                await newConnection.invoke("JoinCanvasGroup", canvasID);
+                console.log(`Joined canvas group: ${canvasID}`);
             } catch (err) {
-                console.error("Error connecting to SignalR Hub: ", err);
+                console.error("Error connecting or joining canvas group:", err);
             }
         };
 
         startConnection();
 
         return () => {
-            if (connection) {
-                connection.invoke("LeaveCanvasGroup","Canvas 1").catch((err) => console.error("Error leaving group:", err));
-                connection.stop().catch((err) => console.error("Error stopping connection: ", err));
+            isCancelled = true;
+            const conn = connectionRef.current;
+
+            if (conn) {
+                console.log("Cleaning up connection");
+                if (conn.state === "Connected"){
+                    conn.invoke("LeaveCanvasGroup", canvasID).then(()=> {
+                        conn.stop().catch((err) => console.error("Error stopping connection:", err));
+                    }).catch((err) => console.error("Error leaving group:", err));
+                } else {
+                    conn.stop()
+                        .catch((err) => console.error("Error stopping connection:", err));
+                }
+
+
+                connectionRef.current = null;
+                setIsConnected(false);
             }
         };
-    }, [url]);
-
-
+    }, [canvasID, url]); // rerun if canvasID or url changes
 
     return { connection, isConnected };
-};;
+};
