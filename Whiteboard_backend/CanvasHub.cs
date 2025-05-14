@@ -12,6 +12,11 @@ namespace Canvas_backend
     public class CanvasHub : Hub
     {
         private readonly CanvasService _canvasService;
+
+        public CanvasHub(CanvasService canvasService)
+        {
+            _canvasService = canvasService;
+        }
         public async Task CreateCanvas(string objectID, int width, int height)
         {
             _canvasService.CreateCanvas(objectID, width, height);
@@ -35,10 +40,7 @@ namespace Canvas_backend
             Console.WriteLine("Id left "+ objectID);
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, objectID);
         }
-        public CanvasHub(CanvasService canvasService)
-        {
-            _canvasService = canvasService;
-        }
+        
         public async Task DrawLine(string objectID, float fromX, float fromY, float toX,float toY, float thickness, string color)
         {     
             

@@ -24,6 +24,8 @@ namespace Whiteboard_Backend.Model
                 canvas.Mutate(ctx => ctx.DrawLine(pen, from, to));
             }
         }
+        
+
         public byte[] ExportImageBytes()
         {
             lock (_lock)
@@ -34,6 +36,23 @@ namespace Whiteboard_Backend.Model
                 return ms.ToArray();
             }
         }
+
+        public byte[] ExportThumbnail()
+        {
+            Image<Rgba32> thumbnail;
+            lock (_lock)
+            {
+                thumbnail = canvas.Clone();
+            }
+            thumbnail.Mutate(ctx => ctx.Resize(200, 100));
+            using var ms = new MemoryStream();
+            using (thumbnail)
+            {
+                thumbnail.SaveAsPng(ms);
+            }
+            return ms.ToArray();
+        }
+
         public void NewCanvas()
         {
             canvas.Mutate(x => x.Fill(Color.White));

@@ -5,6 +5,7 @@ using SixLabors.ImageSharp.Processing;
 using System.Numerics;
 using System.Collections.Concurrent;
 using Whiteboard_Backend.Model;
+using System.ComponentModel.Design;
 
 
 namespace Canvas_backend.Model
@@ -21,6 +22,19 @@ namespace Canvas_backend.Model
             CreateCanvas("Canvas3", 1000, 800);
             Console.WriteLine("Number of Canvases" + _canvases.Count());
         }
+
+        public List<Tuple<string, byte[]>> getAllCanvasesPreview()
+        {
+            List<Tuple<string, byte[]>> list = new List<Tuple<string, byte[]>>();
+            foreach (var (key, value) in _canvases)
+            {
+                list.Add(new Tuple<string, byte[]>(key, value.ExportThumbnail()));
+            }
+
+            return list;
+        }
+
+
         public void CreateCanvas(string objectID,int width, int height)
         {
             _canvases.GetOrAdd(objectID, _ => new CanvasInstance(width, height));

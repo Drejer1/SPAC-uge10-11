@@ -11,7 +11,7 @@ export const useWebSocket = (url: string, canvasID: string | undefined) => {
     useEffect(() => {
         if (!canvasID) return;
 
-        let isCancelled = false;
+        let isCancelled: boolean = false;
 
         const startConnection = async () => {
             // Prevent duplicate connections
