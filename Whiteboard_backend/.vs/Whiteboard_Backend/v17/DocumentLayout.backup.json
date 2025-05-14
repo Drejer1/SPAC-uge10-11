@@ -38,20 +38,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Whiteboard_Backend.csproj",
-              "DocumentMoniker": "C:\\Users\\A-SPAC10\\Documents\\GitHub\\SPAC-uge10-11\\Whiteboard_backend\\Whiteboard_Backend.csproj",
-              "RelativeDocumentMoniker": "Whiteboard_Backend.csproj",
-              "ToolTip": "C:\\Users\\A-SPAC10\\Documents\\GitHub\\SPAC-uge10-11\\Whiteboard_backend\\Whiteboard_Backend.csproj",
-              "RelativeToolTip": "Whiteboard_Backend.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-05-02T13:04:33.274Z"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 2,
@@ -84,10 +72,22 @@
               "RelativeDocumentMoniker": "Model\\CanvasInstance.cs",
               "ToolTip": "C:\\Users\\A-SPAC10\\Documents\\GitHub\\SPAC-uge10-11\\Whiteboard_backend\\Model\\CanvasInstance.cs",
               "RelativeToolTip": "Model\\CanvasInstance.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAgwA8AAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-08T11:31:24.471Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Whiteboard_Backend.csproj",
+              "DocumentMoniker": "C:\\Users\\A-SPAC10\\Documents\\GitHub\\SPAC-uge10-11\\Whiteboard_backend\\Whiteboard_Backend.csproj",
+              "RelativeDocumentMoniker": "Whiteboard_Backend.csproj",
+              "ToolTip": "C:\\Users\\A-SPAC10\\Documents\\GitHub\\SPAC-uge10-11\\Whiteboard_backend\\Whiteboard_Backend.csproj",
+              "RelativeToolTip": "Whiteboard_Backend.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-02T13:04:33.274Z"
             },
             {
               "$type": "Document",
