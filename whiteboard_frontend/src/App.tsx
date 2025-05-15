@@ -6,7 +6,6 @@ import './App.css'
 import {CanvasProvider} from "./contexts/CanvasContext.tsx";
 import CanvasListPage from "./pages/CanvasListPage.tsx";
 import Navbar from "./pages/Navbar.tsx";
-import DisplayAllCanvases from "./components/displayAllCanvases.tsx";
 //import { HubConnectionBuilder } from '@microsoft/signalr';
 
 

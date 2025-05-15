@@ -76,3 +76,37 @@ nav li a {
   display: flex;
   align-items: center;
 }
+.container {
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.grid-item {
+  text-decoration: none;
+  color: inherit;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.grid-item:hover {
+  transform: scale(1.03);
+}
+
+.grid-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.caption {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}

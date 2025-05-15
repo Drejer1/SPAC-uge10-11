@@ -1,4 +1,5 @@
 import {useState, useEffect} from "react";
+import { Link } from "react-router-dom";
 
 
 type canvasDTO = {
@@ -31,15 +32,19 @@ const DisplayAllCanvases = () => {
     return (
         <div>
             <h1>Files</h1>
-            <div>
+            <div className = "grid">
                 {files.map((file, index) => (
                     <div key={index}>
+                        <Link to={`/canvas/${file.item1}`}>
                         <h3>{file.item1}</h3>
+
                         <img
                             src={`data:image/jpeg;base64,${file.item2}`} // assuming content is base64
                             alt={file.item1}
+
                             style={{ maxWidth: '200px', maxHeight: '100px' }}
                         />
+                        </Link>
                     </div>
                 ))}
             </div>

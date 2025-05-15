@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\A-SPAC10\\Documents\\GitHub\\SPAC-uge10-11\\Whiteboard_backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E1452C0A-F01A-4F33-9C1D-62E1BEA442B5}|Whiteboard_Backend.csproj|c:\\users\\a-spac10\\documents\\github\\spac-uge10-11\\whiteboard_backend\\model\\canvasserivce.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E1452C0A-F01A-4F33-9C1D-62E1BEA442B5}|Whiteboard_Backend.csproj|solutionrelative:model\\canvasserivce.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E1452C0A-F01A-4F33-9C1D-62E1BEA442B5}|Whiteboard_Backend.csproj|c:\\users\\a-spac10\\documents\\github\\spac-uge10-11\\whiteboard_backend\\model\\canvascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E1452C0A-F01A-4F33-9C1D-62E1BEA442B5}|Whiteboard_Backend.csproj|solutionrelative:model\\canvascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1452C0A-F01A-4F33-9C1D-62E1BEA442B5}|Whiteboard_Backend.csproj|c:\\users\\a-spac10\\documents\\github\\spac-uge10-11\\whiteboard_backend\\model\\canvasserivce.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1452C0A-F01A-4F33-9C1D-62E1BEA442B5}|Whiteboard_Backend.csproj|solutionrelative:model\\canvasserivce.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E1452C0A-F01A-4F33-9C1D-62E1BEA442B5}|Whiteboard_Backend.csproj|c:\\users\\a-spac10\\documents\\github\\spac-uge10-11\\whiteboard_backend\\model\\canvasinstance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,17 +34,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "CanvasController.cs",
               "DocumentMoniker": "C:\\Users\\A-SPAC10\\Documents\\GitHub\\SPAC-uge10-11\\Whiteboard_backend\\Model\\CanvasController.cs",
               "RelativeDocumentMoniker": "Model\\CanvasController.cs",
               "ToolTip": "C:\\Users\\A-SPAC10\\Documents\\GitHub\\SPAC-uge10-11\\Whiteboard_backend\\Model\\CanvasController.cs",
               "RelativeToolTip": "Model\\CanvasController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-14T10:21:23.422Z",
               "EditorCaption": ""
@@ -59,8 +59,7 @@
               "RelativeToolTip": "CanvasHub.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-01T08:43:18.354Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-01T08:43:18.354Z"
             },
             {
               "$type": "Document",
@@ -72,8 +71,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABcAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-01T08:37:23.815Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-01T08:37:23.815Z"
             },
             {
               "$type": "Document",
@@ -85,12 +83,11 @@
               "RelativeToolTip": "Model\\CanvasInstance.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAAwwCoAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T11:31:24.471Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-08T11:31:24.471Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "CanvasSerivce.cs",
               "DocumentMoniker": "C:\\Users\\A-SPAC10\\Documents\\GitHub\\SPAC-uge10-11\\Whiteboard_backend\\Model\\CanvasSerivce.cs",
               "RelativeDocumentMoniker": "Model\\CanvasSerivce.cs",
@@ -111,8 +108,7 @@
               "RelativeToolTip": "appsettings.Development.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-05-01T09:13:56.117Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-01T09:13:56.117Z"
             }
           ]
         }
