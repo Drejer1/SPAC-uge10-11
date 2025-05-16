@@ -1,3 +1,5 @@
 .vs/
 .vs
 Whiteboard_backend/.vs/Whiteboard_Backend/FileContentIndex/13c1e982-8c78-4719-be99-a1f4abe97966.vsidx
+*.bin
+/Whiteboard_backend/.vs
